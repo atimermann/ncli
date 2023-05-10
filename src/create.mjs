@@ -17,92 +17,50 @@
 
 import program from 'commander'
 import fs from 'fs-extra'
-import { basename, join } from 'path'
+import { join } from 'path'
 import inquirer from 'inquirer'
 import moment from 'moment'
 import { render } from './library/tool.mjs'
 import { __dirname } from '@agtm/utils'
 import semver from 'semver'
-import emptyDir from 'empty-dir'
+
+import { paramCase } from 'change-case';
 
 (async () => {
   try {
-
     moment.locale('pt-br')
 
     const DIRNAME = __dirname(import.meta.url)
-// const INSTALL_DEPENDENCIES_SCRIPT = join(DIRNAME, '../scripts/install_dependencies.sh')
+    // const INSTALL_DEPENDENCIES_SCRIPT = join(DIRNAME, '../scripts/install_dependencies.sh')
 
-// Atualizar sempre que mudar a versão do node no PKG
-// Atualizar versão no pkg no script
-// const NPM_BUILD_COMMAND = 'npx pkg -t node14-linux-x64 --out-path build . && (cd build && mkdir -p config) && cp config/default.yaml build/config'
+    // Atualizar sempre que mudar a versão do node no PKG
+    // Atualizar versão no pkg no script
+    // const NPM_BUILD_COMMAND = 'npx pkg -t node14-linux-x64 --out-path build . && (cd build && mkdir -p config) && cp config/default.yaml build/config'
 
     program
-      .description('Cria um novo projeto com os arquivos necessários utilizando o Sindri Framework.')
+      .description('Cria um novo projeto pré configurado com o @agtm/Node Framework')
       .parse(process.argv)
 
     const templatePath = join(DIRNAME, './template/project')
 
-    const rootPath = process.cwd()
-
-    // Diretório src para copia dos arquivos
-    const srcPath = join(rootPath, 'src')
-
-    if (!rootPath) {
-      console.error('Invalid rootPath')
-      process.exit()
+    const questions = [{
+      name: 'name',
+      message: 'Nome do projeto?',
+      validate: input => input.match(/^[a-zA-Z0-9-]+$/) ? true : 'Nome deve contar apenas caracteres simples (a-Z 0-9)'
+    }, {
+      name: 'description', message: 'Descrição do projeto:', validate: input => input !== ''
+    }, {
+      name: 'author', message: 'Seu nome:', validate: input => input !== ''
+    }, {
+      name: 'mail',
+      message: 'Informe um e-mail válido',
+      validate: input => input.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) ? true : 'Informe um e-mail válido'
+    }, {
+      name: 'app',
+      message: 'Você precisa criar pelo menos um app para este projeto, selecione um nome:',
+      default: 'main',
+      validate: input => input.match(/^[a-zA-Z0-9-]+$/) ? true : 'Nome deve contar apenas caracteres simples (a-Z 0-9)'
     }
-
-    /// /////////////////////////////////////////////////////////
-    // Valida se diretório está vazio
-    /// /////////////////////////////////////////////////////////
-    if (!emptyDir.sync(rootPath)) {
-      console.warn('ATENÇÃO: Diretório não está vazio')
-      if (!(await inquirer.prompt({
-        name: 'confirm',
-        type: 'confirm',
-        default: false,
-        message: 'Continuar?'
-      })).confirm) {
-        process.exit(1)
-      }
-    }
-
-    // Traduzir
-    const questions = [
-      {
-        name: 'name',
-        message: 'Nome do projeto?',
-        default: basename(rootPath),
-        validate: input => input.match(/^[a-zA-Z0-9-]+$/) ? true : 'Nome deve contar apenas caracteres simples (a-Z 0-9)'
-      },
-      {
-        name: 'description',
-        message: 'Descrição do projeto:',
-        validate: input => input !== ''
-      },
-      {
-        name: 'version',
-        message: 'Versão',
-        default: '0.0.1',
-        validate: input => (semver.valid(input) === null) ? 'Versão inválida' : true
-      },
-      {
-        name: 'author',
-        message: 'Seu nome:',
-        validate: input => input !== ''
-      },
-      {
-        name: 'mail',
-        message: 'Informe um e-mail válido',
-        validate: input => input.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) ? true : 'Informe um e-mail válido'
-      },
-      {
-        name: 'app',
-        message: 'Você precisa criar pelo menos um app para este projeto, selecione um nome:',
-        default: basename(rootPath),
-        validate: input => input.match(/^[a-zA-Z0-9-]+$/) ? true : 'Nome deve contar apenas caracteres simples (a-Z 0-9)'
-      }
       // {
       //   type: 'checkbox',
       //   name: 'apps',
@@ -119,10 +77,7 @@ import emptyDir from 'empty-dir'
     }
 
     if (!(await inquirer.prompt({
-      name: 'confirm',
-      type: 'confirm',
-      default: true,
-      message: 'Continuar?'
+      name: 'confirm', type: 'confirm', default: true, message: 'Continuar?'
     })).confirm) {
       process.exit()
     }
@@ -133,15 +88,32 @@ import emptyDir from 'empty-dir'
     /// /////////////////////////////////////////////////////////
     console.log(`NodeJs Version: ${process.version}`)
 
-    if (semver.lt(process.version, '14.0.0')) {
-      console.error('Required version of nodejs greater than 14.0.0')
-      process.exit(2)
+    // TODO TESTAR
+
+    // if (semver.lt(process.version, '14.0.0')) {
+    //   console.error('Required version of nodejs greater than 14.0.0')
+    //   process.exit(2)
+    // }
+    //
+    // // Verifique ultima versão disponível em ~/.pkg-cache. Teste novas versões
+    // if (semver.gtr(process.version, '14.4.0')) {
+    //   console.warn('WARN: If you wanted to compile a project using "node-pkg", remember that it will be compiled with the latest version available for "node-pkg", which is currently 14.4.0 LTS')
+    // }
+
+    // --------------------------------------------------------
+    // Cria diretório
+    // --------------------------------------------------------
+
+    const projectFolderName = paramCase(answers.name)
+    const rootPath = join(process.cwd(), projectFolderName)
+    const srcPath = join(rootPath, 'src')
+
+    if (fs.existsSync(rootPath)) {
+      console.error(`Diretório "${rootPath}" já existe.`)
+      process.exit()
     }
 
-    // Verifique ultima versão disponível em ~/.pkg-cache. Teste novas versões
-    if (semver.gtr(process.version, '14.4.0')) {
-      console.warn('WARN: If you wanted to compile a project using "node-pkg", remember that it will be compiled with the latest version available for "node-pkg", which is currently 14.4.0 LTS')
-    }
+    fs.mkdirSync(rootPath)
 
     /// /////////////////////////////////////////////////////////
     // Copia Template
@@ -185,9 +157,7 @@ import emptyDir from 'empty-dir'
 
     /// /// helloWorld.mjs //////
     await render(join(srcPath, 'apps', '__app_template', 'controllers', 'helloWorld.mjs'), {
-      CREATED_DATE: moment().format('L'),
-      APP: answers.app,
-      AUTHOR: `${answers.author} <${answers.mail}>`
+      CREATED_DATE: moment().format('L'), APP: answers.app, AUTHOR: `${answers.author} <${answers.mail}>`
     })
 
     /// /////////////////////////////////////////////////////////
@@ -195,19 +165,16 @@ import emptyDir from 'empty-dir'
     /// /////////////////////////////////////////////////////////
 
     console.log(`Criando app "${answers.app}"`)
-    await fs.move(
-      join(srcPath, 'apps', '__app_template'),
-      join(srcPath, 'apps', answers.app)
-    )
+    await fs.move(join(srcPath, 'apps', '__app_template'), join(srcPath, 'apps', answers.app))
 
     console.log('\n------------------------------------')
     console.log('Projeto criado com sucesso!')
+    console.log(`\n\tcd ${projectFolderName}`)
     console.log('\nDigite comando abaixo para configurar o projeto: \n\tnpm run config')
     console.log('\nPara testar, execute o script: \n\tnpm run install-assets')
     console.log('\nEm seguida:\n\tnpm run dev')
     console.log('\nPara gerar binário:\n\tnpm run build')
     console.log('------------------------------------\n\n')
-
   } catch (e) {
     console.error(e.message)
     console.error(e.stack)

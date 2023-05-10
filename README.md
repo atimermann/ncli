@@ -1,6 +1,6 @@
-# Projeto Sindri Cli 
+# Projeto AGTM Cli Tool 
 
-Conjuntos de scripts para auxiliar no desenvolvimento de projetos criados com Sindri Framework.
+Conjuntos de scripts para auxiliar no desenvolvimento de projetos.
 
 O principal script é o sindri-create, utilizado para criar projeto sindri framework, podemos executar 
 necessidade de instalar o sindri-cri da seguinte forma:

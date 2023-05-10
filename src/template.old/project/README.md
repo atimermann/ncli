@@ -1,3 +1,0 @@
-DOCUMENTAÇÃO PROJETO AQUI
-
-TODO: Melhorar template

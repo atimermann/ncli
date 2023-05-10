@@ -18,8 +18,8 @@ y | Y | '')
   fi
 
   ;;
-*)
-  ;;
+*) ;;
+
 esac
 
 #######################################################
@@ -28,20 +28,10 @@ esac
 read -p "Instalar dependencias?(Y/n)? " answer
 case ${answer:0:1} in
 y | Y | '')
-
-  npm i --save @agtm/sindri-framework
-  npm i --save config
-  npm i --save esm-module-alias
-
-  npm i --save-dev @agtm/sindri-cli
-  npm i --save-dev pkg
-  npm i --save-dev nodemon
-  npm i --save-dev ndb
-
-
+  npm i --save @agtm/sindri-framework config esm-module-alias @agtm/cli-tool pkg nodemon ndb
   ;;
-*)
-  ;;
+*) ;;
+
 esac
 
 #######################################################
@@ -55,9 +45,8 @@ y | Y | '')
   npx eslint --init
 
   ;;
-*)
+*) ;;
 
-  ;;
 esac
 
 echo

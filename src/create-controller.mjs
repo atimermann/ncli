@@ -18,7 +18,6 @@ import { __dirname, loadJson } from '@agtm/utils'
 
 (async () => {
   try {
-
     moment.locale('pt-br')
 
     const DIRNAME = __dirname(import.meta.url)

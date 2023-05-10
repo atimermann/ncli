@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 /**
- * Inicializa Script do Sindri
+ * Inicializa Script do AGTM
  *
- * TODO: Mudar padrão de arquivos de CammelCase para ParamCase, seguindo padrão do nodejs
  */
 
 import { __dirname, loadJson } from '@agtm/utils'
@@ -17,8 +16,8 @@ import { join } from 'path'
 
   program
     .version(sindriCliPackageJson.version)
-    .command('build', 'Gera um binário da aplicação, agrupando vários arquivos em um unico arquivo executável. Protege código fonte condificandos utilizando a ferramenta node-pkg. Permitindo fácil distribuição comercial do projeto.')
-    .command('create', 'Cria um novo projeto com os arquivos necessários utilizando o Sindri Framework.')
+    // .command('build', 'Gera um binário da aplicação, agrupando vários arquivos em um unico arquivo executável. Protege código fonte condificandos utilizando a ferramenta node-pkg. Permitindo fácil distribuição comercial do projeto.')
+    .command('create', 'Cria um novo projeto pré configurado com o @agtm/Node Framework')
     .command('create-app', 'Cria novo app baseado no template.')
     .command('create-controller', 'Cria novo controller.')
     .command('install-assets', 'Copia assets (arquivos estáticos) das apps para pasta public ou servidor CDN.')

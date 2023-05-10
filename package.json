@@ -1,22 +1,19 @@
 {
-  "name": "@agtm/sindri-cli",
+  "name": "@agtm/cli-tool",
   "version": "3.0.8",
-  "description": "Conjuntos de scripts para auxiliar no desenvolvimento de projetos criados com Sindri Framework.",
+  "description": "Conjuntos de scripts para auxiliar no desenvolvimento de projetos.",
   "type": "module",
   "bin": {
-    "sindri": "src/sindri.mjs",
-    "sindri-create": "src/create.mjs",
-    "sindri-install-assets": "src/install-assets.mjs",
-    "sindri-create-app": "src/create-app.mjs",
-    "sindri-create-controller": "src/create-controller.mjs"
+    "agtm": "src/agtm.mjs",
+    "agtm-create": "src/create.mjs"
   },
   "scripts": {
     "publish-patch": "npm version patch && npm publish --access public",
     "publish-minor": "npm version minor && npm publish --access public",
     "publish-major": "npm version major && npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint .",
-    "fixlint": "npx eslint --fix ."
+    "lint": "npx eslint --ext .mjs,.js --fix .",
+    "lint:test": "npx eslint  --ext .mjs,.js ."
   },
   "files": [
     "scripts",
@@ -28,27 +25,27 @@
   "author": "André Timermann",
   "license": "ISC",
   "dependencies": {
-    "@agtm/sindri-framework": "^2.3.0",
-    "@agtm/utils": "^1.0.1",
+    "@agtm/sindri-framework": "^2.5.1",
+    "@agtm/utils": "^1.0.2",
     "change-case": "^3.1.0",
     "commander": "^2.20.3",
     "empty-dir": "^1.0.0",
     "find-package-json": "^1.2.0",
     "fs-extra": "^8.1.0",
-    "inquirer": "latest",
-    "moment": "^2.24.0",
+    "inquirer": "^9.1.4",
+    "moment": "^2.29.4",
     "semver": "^5.7.1"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
-    "eslint": "^7.23.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.1.0"
   },
   "engines": {
-    "node": ">=14.17"
+    "node": ">=18"
   }
 }

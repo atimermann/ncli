@@ -22,7 +22,6 @@ import { __dirname, loadJson } from '@agtm/utils'
 
 (async () => {
   try {
-
     const packageJson = await loadJson(join(__dirname(import.meta.url), '..', 'package.json'))
 
     program
@@ -38,7 +37,7 @@ import { __dirname, loadJson } from '@agtm/utils'
       })
       .parse(process.argv)
 
-/// /////////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////////////
 
     const rootPath = await findRootPath()
     const srcPath = join(rootPath, 'src')

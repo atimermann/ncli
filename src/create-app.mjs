@@ -21,7 +21,6 @@ const DIRNAME = __dirname(import.meta.url)
 
 ;(async () => {
   try {
-
     program
       .description('Cria um novo app com os arquivos necessários utilizando o Sindri Framework.')
       .parse(process.argv)

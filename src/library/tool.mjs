@@ -7,19 +7,18 @@
  *   Conjunto de funções auxiliares
  *
  */
-process.env.SUPPRESS_NO_CONFIG_WARNING = true
-process.env.LOGGER_CONSOLE_ENABLED = false
-
-import {dirname, join} from 'path'
+import { dirname, join } from 'path'
 import fs from 'fs-extra'
 import packageJsonFinder from 'find-package-json'
 
+process.env.SUPPRESS_NO_CONFIG_WARNING = true
+process.env.LOGGER_CONSOLE_ENABLED = false
 
 /**
  * Procura pela raiz do projeto, procurando pelo pacjage.json
  * @returns {Promise<string>}
  */
-export async function findRootPath() {
+export async function findRootPath () {
   try {
     return dirname(await packageJsonFinder(process.cwd())
       .next().filename)
@@ -35,7 +34,7 @@ export async function findRootPath() {
  *
  * @returns {boolean}
  */
-export async function validateProject(srcPath) {
+export async function validateProject (srcPath) {
   const mainFilePathCommonJs = join(srcPath, 'main.js')
   const mainFilePathESM = join(srcPath, 'main.mjs')
   let mainFilePath
@@ -68,7 +67,7 @@ export async function validateProject(srcPath) {
  *
  * @returns {Promise<void>}
  */
-export async function render(file, locals) {
+export async function render (file, locals) {
   let content = (await fs.readFile(file)).toString()
 
   for (const [key, value] of Object.entries(locals)) {
@@ -77,5 +76,3 @@ export async function render(file, locals) {
 
   await fs.writeFile(file, content)
 }
-
-
