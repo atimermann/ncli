@@ -8,7 +8,7 @@
  *
  */
 
-import { Server } from '@agtm/sindri-framework'
+import { Server } from '@agtm/node-framework'
 import {{NAME}} from './main.mjs'
 
 Server.init({{NAME}})

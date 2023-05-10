@@ -23,7 +23,7 @@ export default class {{CONTROLLER_NAME}}Controller extends Controller {
     this.get('/{{CONTROLLER_ROUTE_NAME}}', async (request, response) => {
       response
         .status(200)
-        .send(`App "inventory" Controller "product-category.mjs" OK. Port: ${config.get('server.port')}`)
+        .send(`App "{{APP}}" Controller "{{CONTROLLER_FILE_NAME}}" OK. Port: ${config.get('server.port')}`)
     })
   }
 }

@@ -102,10 +102,13 @@ const DIRNAME = __dirname(import.meta.url)
       CONTROLLER_NAME: changeCase.pascalCase(answers.controller)
     })
 
+    const port = process.env.PORT || '<PORT>'// config.get('server.port')
+
     console.log('\n------------------------------------')
     console.log('App criado com sucesso!')
     console.log('\nPara testar, execute o script: \n\t"npm run install-assets"')
     console.log('\nEm seguida:\n\t "npm run dev"')
+    console.log(`\nAcesse:\t "http://localhost:${port}/${changeCase.paramCase(answers.controller)}"`)
     console.log('------------------------------------\n\n')
   } catch (e) {
     console.error(e.stack)

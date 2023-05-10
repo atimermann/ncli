@@ -5,21 +5,25 @@
  * @author {{AUTHOR}}
  *
  */
-import { Controller, logger, config } from '@agtm/sindri-framework'
+import {Controller, logger, config} from '@agtm/node-framework'
 
 export default class HelloWorldController extends Controller {
   /**
    * Inicialização
    */
-  setup () {
+  setup() {
     logger.info('Configuring your project...')
+
+    this.schedule('* * * * *', () => {
+      console.log('Tarefa recorrente')
+    })
   }
 
   /**
    * Middlware Pré
    */
-  async pre () {
-    logger.info('Executando Middleware Pre do Sindri Framework...')
+  async pre() {
+    logger.info('Executando Middleware Pre...')
     await this.sleep(1000)
 
     this.use(async (req, res, next) => {
@@ -44,22 +48,22 @@ export default class HelloWorldController extends Controller {
   /**
    * Middlware Pós
    */
-  pos () {
+  pos() {
     setTimeout(() => {
-      logger.info(`Seu novo projeto Sindri está online! Acesse pela url: http://localhost:${config.server.port}`)
+      logger.info(`Seu novo projeto está online! Acesse pela url: http://localhost:${config.server.port}`)
     }, 2000)
   }
 
   /**
    * Configuração de Rotas
    */
-  routes () {
+  routes() {
     this.get('/', async (request, response) => {
       // partials e cache são atributos especiais que permitem configurar o template
       const renderedPage = await this.view('helloWorld.html', {
-        title: 'Hello World - Sindri Framework',
-        body: 'Hello World - Sindri Framework',
-        partials: { p: 'partial' },
+        title: 'Hello World - Node Framework',
+        body: 'Hello World - Node Framework',
+        partials: {p: 'partial'},
         cache: false
       })
 

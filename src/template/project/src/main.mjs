@@ -9,7 +9,7 @@
  */
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { Application } from '@agtm/sindri-framework'
+import { Application } from '@agtm/node-framework'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const {{NAME}} = new Application(__dirname, '{{NAME}}')

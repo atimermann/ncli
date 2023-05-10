@@ -17,7 +17,7 @@ import fs from 'fs-extra'
 import program from 'commander'
 import { findRootPath, validateProject } from './library/tool.mjs'
 
-import ApplicationController from '@agtm/sindri-framework/library/applicationController.js'
+import { ApplicationController } from '@agtm/node-framework'
 import { __dirname, loadJson } from '@agtm/utils'
 
 (async () => {

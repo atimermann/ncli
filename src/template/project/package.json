@@ -1,20 +1,19 @@
 {
   "name": "{{PACKAGE_NAME}}",
-  "version": "{{PACKAGE_VERSION}}",
+  "version": "0.0.1",
   "bin": "{{PACKAGE_MAIN}}",
   "description": "{{PACKAGE_DESCRIPTION}}",
   "main": "{{PACKAGE_MAIN}}",
   "scripts": {
-    "config": "./scripts/config.sh",
-    "update": "npm update @agtm/sindri-cli @agtm/sindri-framework --save",
+    "update": "npm update @agtm/cli-tool @agtm/node-framework",
     "build": "./scripts/build.sh",
     "build-debug": "npx pkg -t node14-linux-x64 --out-path build .",
     "dev": "npx nodemon --loader=./esm-loader.mjs -e mjs,js,yaml,html .",
-    "install-assets": "npx sindri install-assets",
-    "create-app": "npx sindri create-app",
-    "create-controller": "npx sindri create-controller",
-    "lint": "npx eslint src",
-    "lint-fix": "npx eslint --fix src",
+    "install-assets": "npx agtm install-assets",
+    "create-app": "npx agtm create-app",
+    "create-controller": "npx agtm create-controller",
+    "lint:test": "npx eslint src",
+    "lint": "npx eslint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "ndb src/main.js"
   },
@@ -33,5 +32,17 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@agtm/node-framework": "^3",
+    "config": "^3.3.9",
+    "esm-module-alias": "^2.0.3",
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "@agtm/cli-tool": "^4.0.1",
+    "ndb": "^1.1.5",
+    "pkg": "^5.8.1",
+    "eslint": "^8.40.0"
   }
 }

@@ -5,7 +5,10 @@
   "type": "module",
   "bin": {
     "agtm": "src/agtm.mjs",
-    "agtm-create": "src/create.mjs"
+    "agtm-create": "src/create.mjs",
+    "agtm-create-app": "src/create-app.mjs",
+    "agtm-create-controller": "src/create-controller.mjs",
+    "agtm-install-assets": "src/install-assets.mjs"
   },
   "scripts": {
     "publish-patch": "npm version patch && npm publish --access public",
@@ -25,7 +28,7 @@
   "author": "André Timermann",
   "license": "ISC",
   "dependencies": {
-    "@agtm/sindri-framework": "^2.5.1",
+    "@agtm/node-framework": "^3",
     "@agtm/utils": "^1.0.2",
     "change-case": "^3.1.0",
     "commander": "^2.20.3",

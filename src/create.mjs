@@ -90,15 +90,15 @@ import { paramCase } from 'change-case';
 
     // TODO TESTAR
 
-    // if (semver.lt(process.version, '14.0.0')) {
-    //   console.error('Required version of nodejs greater than 14.0.0')
-    //   process.exit(2)
-    // }
-    //
-    // // Verifique ultima versão disponível em ~/.pkg-cache. Teste novas versões
-    // if (semver.gtr(process.version, '14.4.0')) {
-    //   console.warn('WARN: If you wanted to compile a project using "node-pkg", remember that it will be compiled with the latest version available for "node-pkg", which is currently 14.4.0 LTS')
-    // }
+    if (semver.lt(process.version, '18.5.0')) {
+      console.error('Required version of nodejs greater than 18.5.0')
+      process.exit(2)
+    }
+
+    // Verifique ultima versão disponível em ~/.pkg-cache. Teste novas versões
+    if (semver.gtr(process.version, '18.5.0')) {
+      console.warn('WARN: If you wanted to compile a project using "node-pkg", remember that it will be compiled with the latest version available for "node-pkg", which is currently 18.5.0 LTS')
+    }
 
     // --------------------------------------------------------
     // Cria diretório
@@ -169,9 +169,9 @@ import { paramCase } from 'change-case';
 
     console.log('\n------------------------------------')
     console.log('Projeto criado com sucesso!')
-    console.log(`\n\tcd ${projectFolderName}`)
-    console.log('\nDigite comando abaixo para configurar o projeto: \n\tnpm run config')
-    console.log('\nPara testar, execute o script: \n\tnpm run install-assets')
+    console.log(`\tcd ${projectFolderName}`)
+    console.log('\tnpm install')
+    console.log('\nCarregue os assets com: \n\tnpm run install-assets')
     console.log('\nEm seguida:\n\tnpm run dev')
     console.log('\nPara gerar binário:\n\tnpm run build')
     console.log('------------------------------------\n\n')
