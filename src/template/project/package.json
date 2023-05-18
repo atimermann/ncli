@@ -14,8 +14,7 @@
     "create-controller": "npx agtm create-controller",
     "lint:test": "npx eslint src",
     "lint": "npx eslint --fix src",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "ndb src/main.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "{{PACKAGE_AUTHOR}}",
   "license": "ISC",
@@ -41,7 +40,6 @@
   },
   "devDependencies": {
     "@agtm/cli-tool": "^4.0.1",
-    "ndb": "^1.1.5",
     "pkg": "^5.8.1",
     "eslint": "^8.40.0"
   }
