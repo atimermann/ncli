@@ -1,6 +1,6 @@
 {
   "name": "@agtm/cli-tool",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Conjuntos de scripts para auxiliar no desenvolvimento de projetos.",
   "type": "module",
   "bin": {
