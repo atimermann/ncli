@@ -13,9 +13,17 @@ export default class HelloWorldController extends Controller {
    */
   setup() {
     logger.info('Configuring your project...')
+  }
 
-    this.schedule('* * * * *', () => {
-      console.log('Tarefa recorrente')
+  /**
+   * Jobs
+   */
+  jobs() {
+    logger.info('Configuring your project...')
+
+    this.job('teste', '* * * * * *', async () => {
+      console.log('Sleep 2min...')
+      await this.sleep(10000)
     })
   }
 

@@ -17,6 +17,18 @@ export default class {{CONTROLLER_NAME}}Controller extends Controller {
   }
 
   /**
+   * Jobs
+   */
+  jobs() {
+    logger.info('Configuring your project...')
+
+    this.job('teste', '* * * * * *', async () => {
+      console.log('Sleep 2min...')
+      await this.sleep(10000)
+    })
+  }
+
+  /**
    * Configuração de Rotas
    */
   routes () {

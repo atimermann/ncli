@@ -11,4 +11,4 @@
 import { Server } from '@agtm/node-framework'
 import {{NAME}} from './main.mjs'
 
-Server.init({{NAME}})
+await Server.init({{NAME}})
