@@ -5,7 +5,7 @@
  * @author {{AUTHOR}}
  *
  */
-import { Controller, logger, config } from '@agtm/sindri-framework'
+import { Controller, logger, config } from '@agtm/node-framework'
 
 export default class {{CONTROLLER_NAME}}Controller extends Controller {
   /**
@@ -13,13 +13,13 @@ export default class {{CONTROLLER_NAME}}Controller extends Controller {
    */
 
   setup () {
-    logger.info(`App "{{APP}}" Controller "{{CONTROLLER_FILE_NAME}}" OK.`)
+    logger.info('App "{{APP}}" Controller "{{CONTROLLER_FILE_NAME}}" OK.')
   }
 
   /**
    * Jobs
    */
-  jobs() {
+  jobs () {
     logger.info('Configuring your project...')
 
     this.job('teste', '* * * * * *', async () => {
@@ -39,4 +39,3 @@ export default class {{CONTROLLER_NAME}}Controller extends Controller {
     })
   }
 }
-
