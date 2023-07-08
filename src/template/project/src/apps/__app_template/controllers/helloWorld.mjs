@@ -5,39 +5,66 @@
  * @author {{AUTHOR}}
  *
  */
-import {Controller, logger, config} from '@agtm/node-framework'
+import { Controller, createLogger, Config } from '@agtm/node-framework'
+import { sleep } from '@agtm/util'
+
+const logger = createLogger('HelloWorld')
 
 export default class HelloWorldController extends Controller {
   /**
    * Inicialização
    */
-  setup() {
+  setup () {
     logger.info('Configuring your project...')
+
+    logger.info(`Timezone: ${Config.get('server.timezone')}`)
+  }
+
+  async jobSetup () {
+    // Run in fork process
+    logger.info('Create database connection for all jobs')
+  }
+
+  async jobTeardown () {
+    // Run in fork process
+    logger.info('Close database connection on close job')
   }
 
   /**
    * Jobs
    */
-  jobs() {
+  jobs () {
     logger.info('Configuring your project...')
 
-    this.createJob('teste', '* * * * * *', async () => {
-      console.log('Sleep 2min...')
-      await this.sleep(10000)
+    this.createJob('JOB SCHEDULE', '*/10 * * * * *', async () => {
+      logger.info('Sleep 2min...')
+      await sleep(10000)
+    })
+
+    this.createJob('JOB NOW', 'now', async () => {
+      logger.info('Execute one time')
+    })
+
+    this.createJob('JOB CONTINUOS', null, async () => {
+      logger.info('Starting Worker...')
+    })
+
+    this.createWorkers('WORKER', 'JOB CONTINUOS', {
+      concurrency: 3
     })
   }
 
   /**
    * Middlware Pré
    */
-  async pre() {
+  async pre () {
     logger.info('Executando Middleware Pre...')
-    await this.sleep(1000)
+    await sleep(10000)
 
     this.use(async (req, res, next) => {
       // Aguarda 1 segundo
       logger.info('Executando Middleware do Express...')
-      await this.sleep(1000)
+      await sleep(10000)
       logger.info('Middleware executado!')
 
       // Obrigatório executar no final
@@ -56,22 +83,22 @@ export default class HelloWorldController extends Controller {
   /**
    * Middlware Pós
    */
-  pos() {
+  pos () {
     setTimeout(() => {
-      logger.info(`Seu novo projeto está online! Acesse pela url: http://localhost:${config.server.port}`)
+      logger.info(`Seu novo projeto está online! Acesse pela url: http://localhost:${Config.get('server.port')}`)
     }, 2000)
   }
 
   /**
    * Configuração de Rotas
    */
-  routes() {
+  routes () {
     this.get('/', async (request, response) => {
       // partials e cache são atributos especiais que permitem configurar o template
       const renderedPage = await this.view('helloWorld.html', {
         title: 'Hello World - Node Framework',
         body: 'Hello World - Node Framework',
-        partials: {p: 'partial'},
+        partials: { p: 'partial' },
         cache: false
       })
 

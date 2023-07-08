@@ -173,7 +173,7 @@ import { paramCase } from 'change-case';
     console.log('\tnpm install')
     console.log('\nCarregue os assets com: \n\tnpm run install-assets')
     console.log('\nEm seguida:\n\tnpm run dev')
-    console.log('\nPara gerar binário:\n\tnpm run build')
+    // console.log('\nPara gerar binário:\n\tnpm run build')
     console.log('------------------------------------\n\n')
   } catch (e) {
     console.error(e.message)
