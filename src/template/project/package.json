@@ -35,14 +35,12 @@
   },
   "dependencies": {
     "@agtm/node-framework": "^4",
-    "@agtm/util": "^3.1.0",
-    "config": "^3.3.9",
+    "@agtm/util": "^4.0.0",
     "esm-module-alias": "^2.0.3",
     "nodemon": "^2.0.22"
   },
   "devDependencies": {
-    "@agtm/ncli": "^4",
-    "pkg": "^5.8.1",
+    "@agtm/ncli": "^5.0.0",
     "@babel/preset-env": "^7.21.5",
     "babel-jest": "^29.5.0",
     "babel-plugin-module-resolver": "^5.0.0",
