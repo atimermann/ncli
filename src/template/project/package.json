@@ -5,7 +5,7 @@
   "description": "{{PACKAGE_DESCRIPTION}}",
   "main": "{{PACKAGE_MAIN}}",
   "scripts": {
-    "update": "npm update @agtm/cli-tool @agtm/node-framework",
+    "update": "npm update @agtm/cli-tool @agtm/node-framework @agtm/util && npm list @agtm/node-framework @agtm/cli-tool @agtm/util",
     "build": "./scripts/build.sh",
     "build-debug": "npx pkg -t node14-linux-x64 --out-path build .",
     "dev": "npx nodemon --loader=./esm-loader.mjs -e mjs,js,yaml,html .",
@@ -33,14 +33,22 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@agtm/node-framework": "^3",
+    "@agtm/node-framework": "^4",
+    "@agtm/util": "^3",
     "config": "^3.3.9",
     "esm-module-alias": "^2.0.3",
     "nodemon": "^2.0.22"
   },
   "devDependencies": {
-    "@agtm/cli-tool": "^4.0.1",
+    "@agtm/cli-tool": "^4",
     "pkg": "^5.8.1",
-    "eslint": "^8.40.0"
+    "@babel/preset-env": "^7.21.5",
+    "babel-jest": "^29.5.0",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "eslint": "^8.40.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
   }
 }

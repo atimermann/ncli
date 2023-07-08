@@ -1,22 +1,23 @@
 {
-  "name": "@agtm/cli-tool",
+  "name": "@agtm/ncli",
   "version": "4.1.1",
-  "description": "Conjuntos de scripts para auxiliar no desenvolvimento de projetos.",
+  "description": "Conjuntos de scripts para auxiliar no desenvolvimento de projetos node.",
   "type": "module",
   "bin": {
-    "agtm": "src/agtm.mjs",
-    "agtm-create": "src/create.mjs",
-    "agtm-create-app": "src/create-app.mjs",
-    "agtm-create-controller": "src/create-controller.mjs",
-    "agtm-install-assets": "src/install-assets.mjs"
+    "ncli": "src/agtm.mjs",
+    "ncli-create": "src/create.mjs",
+    "ncli-create-app": "src/create-app.mjs",
+    "ncli-create-controller": "src/create-controller.mjs",
+    "ncli-install-assets": "src/install-assets.mjs"
   },
   "scripts": {
-    "publish-patch": "npm version patch && npm publish --access public",
-    "publish-minor": "npm version minor && npm publish --access public",
-    "publish-major": "npm version major && npm publish --access public",
+    "publish-patch": "npm version patch && npm publish --access public && git push",
+    "publish-minor": "npm version minor && npm publish --access public && git push",
+    "publish-major": "npm version major && npm publish --access public && git push",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint --ext .mjs,.js --fix .",
-    "lint:test": "npx eslint  --ext .mjs,.js ."
+    "lint:test": "npx eslint  --ext .mjs,.js .",
+    "update": "npm update @agtm/node-framework @agtm/util && npm list @agtm/node-framework @agtm/util"
   },
   "files": [
     "scripts",
@@ -25,10 +26,14 @@
   "keywords": [
     "cli"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atimermann/ncli.git"
+  },
   "author": "André Timermann",
   "license": "ISC",
   "dependencies": {
-    "@agtm/node-framework": "^3",
+    "@agtm/node-framework": "^4.2.7",
     "@agtm/utils": "^1.0.2",
     "change-case": "^3.1.0",
     "commander": "^2.20.3",

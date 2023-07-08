@@ -21,7 +21,7 @@ export default class HelloWorldController extends Controller {
   jobs() {
     logger.info('Configuring your project...')
 
-    this.job('teste', '* * * * * *', async () => {
+    this.createJob('teste', '* * * * * *', async () => {
       console.log('Sleep 2min...')
       await this.sleep(10000)
     })
