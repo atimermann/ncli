@@ -4,7 +4,7 @@
   "description": "Conjuntos de scripts para auxiliar no desenvolvimento de projetos node.",
   "type": "module",
   "bin": {
-    "ncli": "src/agtm.mjs",
+    "ncli": "src/ncli.mjs",
     "ncli-create": "src/create.mjs",
     "ncli-create-app": "src/create-app.mjs",
     "ncli-create-controller": "src/create-controller.mjs",
