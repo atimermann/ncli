@@ -84,7 +84,7 @@ import { paramCase } from 'change-case';
 
     /// /////////////////////////////////////////////////////////
     // Valida NODEJS Version
-    // Sempre atualizar com a ultima versão do node disponível no PKG e configurado no sindri-framework
+    // Sempre atualizar com a ultima versão do node disponível no PKG e configurado no @agtm/node-framework
     /// /////////////////////////////////////////////////////////
     console.log(`NodeJs Version: ${process.version}`)
 

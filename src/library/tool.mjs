@@ -49,13 +49,14 @@ export async function validateProject (srcPath) {
 
   const project = (await import(mainFilePath)).default
 
-  if (project.constructor._sindriApplicationClass) {
-    if (project.name !== undefined && project.path !== undefined && project.applications !== undefined && project.options !== undefined && project.id !== undefined) {
-    } else {
-      throw new Error('Invalid project: Check if main.mjs is returning instance of sindri-framework/instance')
-    }
-  } else {
-    throw new Error('Invalid project: Project must be instance of sindri-framework/application')
+  if (!project.constructor._applicationClass) {
+    throw new Error('Invalid project: Project must be instance of @agtm/node-framework/application')
+  }
+
+  const { name, path, applications, uuid } = project
+
+  if (name === undefined || path === undefined || applications === undefined || uuid === undefined) {
+    throw new Error('Invalid project: Check if main.mjs is returning instance of @agtm/node-framework/instance')
   }
 }
 

@@ -8,7 +8,7 @@
  *
  * Copia assets dos projetos para pasta public ou CDN
  *
- * TODO: Suporte a CDN (ver como foi implementado no controller do sindri-framework)
+ * TODO: Suporte a CDN (ver como foi implementado no controller do @agtm/node-framework)
  *
  */
 
@@ -16,8 +16,6 @@ import { join, relative } from 'path'
 import fs from 'fs-extra'
 import program from 'commander'
 import { findRootPath, validateProject } from './library/tool.mjs'
-
-import { ApplicationController } from '@agtm/node-framework'
 import { __dirname, loadJson } from '@agtm/utils'
 
 (async () => {
@@ -41,13 +39,12 @@ import { __dirname, loadJson } from '@agtm/utils'
 
     const rootPath = await findRootPath()
     const srcPath = join(rootPath, 'src')
-    await validateProject(srcPath)
+    validateProject(srcPath)
 
     /// /////////////////////////////////////////////////////////////////////
     // Carrega Aplicação
     /// /////////////////////////////////////////////////////////////////////
-    const Application = (await import(join(srcPath, 'main.mjs'))).default
-    const application = Application.getApplicationData()
+    const application = (await import(join(srcPath, 'main.mjs'))).default
 
     /// /////////////////////////////////////////////////////////////////////
     // Limpa diretório public
@@ -59,7 +56,7 @@ import { __dirname, loadJson } from '@agtm/utils'
     /// /////////////////////////////////////////////////////////////////////
     // Copia ou cria link dos assets
     /// /////////////////////////////////////////////////////////////////////
-    for (const app of await ApplicationController.getApps(application.applications)) {
+    for (const app of await application.getApps()) {
       const source = join(app.path, 'assets')
 
       if (await fs.pathExists(source)) {

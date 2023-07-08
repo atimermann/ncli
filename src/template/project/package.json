@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@agtm/node-framework": "^4",
-    "@agtm/util": "^4.0.0",
+    "@agtm/util": "^4.0.2",
     "esm-module-alias": "^2.0.3",
     "nodemon": "^2.0.22"
   },
