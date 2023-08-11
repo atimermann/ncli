@@ -54,6 +54,18 @@ export default class HelloWorldController extends Controller {
     })
   }
 
+  socket () {
+    this.namespace('/my-namespace').on('connection', socket => {
+      socket.emit('newData', { nane: 'João' })
+    })
+
+    this.namespace('/admin', socket => {
+      socket.on('delete user', () => {
+        // ...
+      })
+    })
+  }
+
   /**
    * Middlware Pré
    */
