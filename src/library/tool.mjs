@@ -49,7 +49,7 @@ export async function validateProject (srcPath) {
 
   const project = (await import(mainFilePath)).default
 
-  if (!project.constructor._applicationClass) {
+  if (!project.constructor._nodeFrameworkVersion) {
     throw new Error('Invalid project: Project must be instance of @agtm/node-framework/application')
   }
 
