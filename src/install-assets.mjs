@@ -17,6 +17,7 @@ import fs from 'fs-extra'
 import program from 'commander'
 import { findRootPath, validateProject } from './library/tool.mjs'
 import { __dirname, loadJson } from '@agtm/utils'
+import { Application } from '@agtm/node-framework'
 
 (async () => {
   try {
@@ -44,7 +45,9 @@ import { __dirname, loadJson } from '@agtm/utils'
     /// /////////////////////////////////////////////////////////////////////
     // Carrega Aplicação
     /// /////////////////////////////////////////////////////////////////////
-    const application = (await import(join(srcPath, 'main.mjs'))).default
+    const applicationLoader = (await import(join(srcPath, 'main.mjs'))).default
+
+    const application = applicationLoader(Application)
 
     /// /////////////////////////////////////////////////////////////////////
     // Limpa diretório public

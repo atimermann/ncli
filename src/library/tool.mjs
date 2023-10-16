@@ -10,6 +10,7 @@
 import { dirname, join } from 'path'
 import fs from 'fs-extra'
 import packageJsonFinder from 'find-package-json'
+import { Application } from '@agtm/node-framework'
 
 process.env.SUPPRESS_NO_CONFIG_WARNING = true
 process.env.LOGGER_CONSOLE_ENABLED = false
@@ -47,7 +48,8 @@ export async function validateProject (srcPath) {
     throw new Error('Invalid project: main.js file does not exist')
   }
 
-  const project = (await import(mainFilePath)).default
+  const applicationLoader = (await import(mainFilePath)).default
+  const project = applicationLoader(Application)
 
   if (!project.constructor._nodeFrameworkVersion) {
     throw new Error('Invalid project: Project must be instance of @agtm/node-framework/application')

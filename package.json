@@ -33,7 +33,7 @@
   "author": "André Timermann",
   "license": "ISC",
   "dependencies": {
-    "@agtm/node-framework": "^4.2.7",
+    "@agtm/node-framework": "^5.0.3",
     "@agtm/utils": "^1.0.2",
     "change-case": "^3.1.0",
     "commander": "^2.20.3",
