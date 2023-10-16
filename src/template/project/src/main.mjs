@@ -8,10 +8,10 @@
  *
  */
 import { __dirname } from '@agtm/util'
-import { Application, checkExecution } from '@agtm/node-framework'
+import { checkExecution } from '@agtm/node-framework'
 
 checkExecution(import.meta.url)
 
-const {{NAME}} = new Application(__dirname(import.meta.url), '{{NAME}}')
-
-export default {{NAME}}
+export default function applicationLoader (Application){
+  return new Application(__dirname(import.meta.url), '{{NAME}}')
+}
