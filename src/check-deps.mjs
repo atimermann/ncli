@@ -47,12 +47,34 @@ async function isModulePublishable (modulePath) {
   }
 }
 
+async function checkModuleHasChange (modulePath, moduleInfo) {
+
+  const status = await checkGitStatus(modulePath)
+
+  for (const file of status.files) {
+
+    // Se tem outros arquivos para commitar, já marca como has change diretamente
+    if (!['package-lock.json', 'package.json'].includes(file.path)) return true
+
+    const git = simpleGit(modulePath)
+    const diff = await git.diff(['--unified=0', '--no-color', '--no-prefix', 'package.json'])
+
+    const versionChangeRegex = /^(\+|\-)\s+"version":\s*"\d+\.\d+\.\d+",$/m
+
+    // Verifica se tem outras alterações além da versão
+    if (!versionChangeRegex.test(diff)) return true
+
+  }
+  return false
+}
+
 // Função para gerar o JSON com informações dos módulos
 async function generateModuleInfo () {
   const modulesInfo = []
 
   // Lê o diretório raiz
   for (const moduleName of await fs.promises.readdir(modulesDirectory)) {
+
     const modulePath = join(modulesDirectory, moduleName)
     if ((await fs.promises.stat(modulePath)).isDirectory()) {
 
@@ -79,8 +101,7 @@ async function generateModuleInfo () {
       // Verifica o status do Git
       //////////////////////////////////////////
       try {
-        const status = await checkGitStatus(modulePath)
-        moduleInfo.hasChanges = status.files.length > 0
+        moduleInfo.hasChanges = await checkModuleHasChange(modulePath, moduleInfo)
         modulesInfo.push(moduleInfo)
 
         // Se você quiser verificar outras coisas, como se tem algo para publicar, pode adicionar aqui
@@ -107,8 +128,6 @@ async function generateModuleInfo () {
 
   return modulesInfo
 }
-
-
 
 function isModuleInstalled (moduleName) {
 
@@ -143,14 +162,17 @@ async function checkModuleInstalledVersion (moduleInfo) {
 
     for (const dependency of Object.keys(result.dependencies)) {
 
-      if (dependency === moduleInfo.name){
+      if (dependency === moduleInfo.name) {
         installedVersion = result.dependencies[dependency].version
-      }else{
+      } else {
         nestedModules[dependency] = result.dependencies[dependency]
       }
 
     }
-    return {installedVersion, nestedModules}
+    return {
+      installedVersion,
+      nestedModules
+    }
   } catch (e) {
     throw e
   }
@@ -171,16 +193,16 @@ async function checkModuleLinked (moduleInfo) {
     return !!result.dependencies
   } catch (error) {
 
-    if (error.code === 1 && error.stdout){
+    if (error.code === 1 && error.stdout) {
       return false
-    }else{
+    } else {
       throw error
     }
   }
 }
 
 // Função recursiva para verificar as versões das dependências
-function checkNestedModules(targetModule, nestedModules, targetVersion, path = '') {
+function checkNestedModules (targetModule, nestedModules, targetVersion, path = '') {
 
   let oldVersions = []
 
@@ -189,9 +211,9 @@ function checkNestedModules(targetModule, nestedModules, targetVersion, path = '
     const nestedModule = nestedModules[nestedModuleName]
     const pathNestedModule = `${path} -> ${nestedModuleName}`
 
-    if (nestedModuleName === targetModule){
+    if (nestedModuleName === targetModule) {
 
-      if (nestedModule.version !== targetVersion){
+      if (nestedModule.version !== targetVersion) {
         oldVersions.push({
           path: pathNestedModule,
           version: nestedModule.version
@@ -200,7 +222,7 @@ function checkNestedModules(targetModule, nestedModules, targetVersion, path = '
 
     }
 
-    if (nestedModule.dependencies){
+    if (nestedModule.dependencies) {
       const result = checkNestedModules(targetModule, nestedModule.dependencies, targetVersion, pathNestedModule)
       oldVersions = oldVersions.concat(result)
     }
@@ -234,15 +256,18 @@ function printTable (modules) {
     const oldVersion = module.version !== module.instaledVersion
 
     const oldNesteModulesDescription = (module.oldNestedModules.map(dep => {
-      const { path, version } = dep;
-      return `${path}  ${chalk.red.bold(`[${version}]`)}`;
+      const {
+        path,
+        version
+      } = dep
+      return `${path}  ${chalk.red.bold(`[${version}]`)}`
     })).join('\n')
 
     const warn = linked || hasChanges || isPublishable || oldVersion || oldNesteModulesDescription
 
     tableData.push([
-      warn ? chalk.red.bold(module.name) :  module.name,
-      linked ? chalk.red.bold('Linked') : 'No' ,
+      warn ? chalk.red.bold(module.name) : module.name,
+      linked ? chalk.red.bold('Linked') : 'No',
       hasChanges ? chalk.red.bold('YES') : 'No',
       isPublishable ? chalk.red.bold('YES') : 'No',
       module.version,
@@ -254,11 +279,11 @@ function printTable (modules) {
     if (warn) statusOk = false
   }
 
-
-
   // Imprime a tabela no terminal
   console.log(table(tableData))
-  console.log(`\nReady for deployment: ${statusOk ? chalk.green.bold('Yes') :  chalk.red.bold('NOT!!!') }\n`)
+  console.log(`\nReady for deployment: ${statusOk ? chalk.green.bold('Yes') : chalk.red.bold('NOT!!!')}\n`)
+
+  return statusOk
 }
 
 /////////////////////////////////////////////////////////////////
@@ -273,7 +298,6 @@ const moduleInfo = await generateModuleInfo()
 const installedModules = moduleInfo.filter((module) =>
   isModuleInstalled(module.name)
 )
-
 
 /////////////////////////////////////////////////////////////////
 // Verifica versão instalada e se Modulo está linkado
@@ -294,8 +318,7 @@ for (const installedModule of installedModules) {
 // Check Nested Deps
 /////////////////////////////////////////////////////////////////
 
+if (!printTable(installedModules)) {
+  process.exit(1)
+}
 
-// console.log(moduleInfo)
-printTable(installedModules)
-
-// displayJSONResult(moduleInfo)
