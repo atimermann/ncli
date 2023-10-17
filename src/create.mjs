@@ -21,7 +21,7 @@ import { join } from 'path'
 import inquirer from 'inquirer'
 import moment from 'moment'
 import { render } from './library/tool.mjs'
-import { __dirname } from '@agtm/utils'
+import { __dirname } from '@agtm/util'
 import semver from 'semver'
 
 import { paramCase } from 'change-case';

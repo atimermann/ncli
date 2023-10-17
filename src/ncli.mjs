@@ -4,7 +4,7 @@
  *
  */
 
-import { __dirname, loadJson } from '@agtm/utils'
+import { __dirname, loadJson } from '@agtm/util'
 import program from 'commander'
 
 import { join } from 'path'

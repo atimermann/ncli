@@ -16,7 +16,7 @@ import { join, relative } from 'path'
 import fs from 'fs-extra'
 import program from 'commander'
 import { findRootPath, validateProject } from './library/tool.mjs'
-import { __dirname, loadJson } from '@agtm/utils'
+import { __dirname, loadJson } from '@agtm/util'
 import { Application } from '@agtm/node-framework'
 
 (async () => {

@@ -14,7 +14,7 @@ import changeCase from 'change-case'
 import { findRootPath, render, validateProject } from './library/tool.mjs'
 
 import moment from 'moment'
-import { __dirname, loadJson } from '@agtm/utils'
+import { __dirname, loadJson } from '@agtm/util'
 
 (async () => {
   try {

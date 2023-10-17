@@ -12,7 +12,7 @@ import inquirer from 'inquirer'
 import fs from 'fs-extra'
 import changeCase from 'change-case'
 import { findRootPath, render, validateProject } from './library/tool.mjs'
-import { __dirname, loadJson } from '@agtm/utils'
+import { __dirname, loadJson } from '@agtm/util'
 
 import moment from 'moment'
 
