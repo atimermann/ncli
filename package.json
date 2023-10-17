@@ -6,6 +6,7 @@
   "bin": {
     "ncli": "src/ncli.mjs",
     "ncli-create": "src/create.mjs",
+    "ncli-check-deps": "src/check-deps.mjs",
     "ncli-create-app": "src/create-app.mjs",
     "ncli-create-controller": "src/create-controller.mjs",
     "ncli-install-assets": "src/install-assets.mjs"
@@ -34,7 +35,6 @@
   "license": "ISC",
   "dependencies": {
     "@agtm/node-framework": "^5.0.3",
-    "@agtm/utils": "^1.0.2",
     "change-case": "^3.1.0",
     "commander": "^2.20.3",
     "empty-dir": "^1.0.0",
@@ -42,7 +42,9 @@
     "fs-extra": "^8.1.0",
     "inquirer": "^9.1.4",
     "moment": "^2.29.4",
-    "semver": "^5.7.1"
+    "semver": "^5.7.1",
+    "simple-git": "^3.20.0",
+    "table": "^6.8.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
